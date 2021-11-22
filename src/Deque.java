@@ -47,16 +47,27 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) {
             throw new IllegalArgumentException("Null argument");
         }
-        Node oldLast = last;
-        last = new Node();
-        last.item = item;
-        last.next = null;
-        if (isEmpty()) {
-            first = last;
+        if (first == null) {
+            addFirst(item);
+        } else {
+            Node temp = first;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = new Node();
+            temp.next.item = item;
+            temp.next.next = null;
         }
-        else {
-            oldLast.next = last;
-        }
+//        Node oldLast = last;
+//        last = new Node();
+//        last.item = item;
+//        last.next = null;
+//        if (isEmpty()) {
+//            first = last;
+//        }
+//        else {
+//            oldLast.next = last;
+//        }
         size++;
     }
 
@@ -67,7 +78,6 @@ public class Deque<Item> implements Iterable<Item> {
         }
         Item item = first.item;
         first = first.next;
-        if (isEmpty()) { last = null; }
         size--;
         return item;
     }
@@ -106,7 +116,25 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
+
     public static void main(String[] args) {
+        Deque<Integer> deque = new Deque<Integer>();
+        deque.addFirst(4);
+        deque.addFirst(2);
+        deque.addLast(3);
+        deque.addFirst(5);
+        deque.addLast(6);
+        deque.removeFirst();
+        deque.removeFirst();
+        deque.removeLast();
+        for (int i : deque) {
+            System.out.println(i);
+        }
+        deque.removeLast();
+        deque.removeFirst();
+        if (deque.isEmpty()) {
+            System.out.println("Works!");
+        }
 
     }
 }
